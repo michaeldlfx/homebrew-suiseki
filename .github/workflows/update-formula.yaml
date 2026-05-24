@@ -1,0 +1,57 @@
+name: update-formula
+
+# Regenerate suiseki.rb from the latest published suiseki release and commit it
+# when it changed. The weekly run is a backstop; the primary path is running it
+# on demand right after a release:
+#   gh workflow run update-formula --repo michaeldlfx/homebrew-suiseki
+#
+# No cross-repo token needed: reading suiseki's public releases works with this
+# repo's GITHUB_TOKEN, and the commit is pushed to this same repo.
+#
+# Note: GitHub disables scheduled workflows after ~60 days of repo inactivity
+# (bot commits do not reset that timer). If the weekly run stops, re-enable it
+# from the Actions tab or trigger it manually.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 7 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  update-formula:
+    name: update formula
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+
+      - name: fetch latest suiseki release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="$(gh release view --repo michaeldlfx/suiseki --json tagName --jq .tagName)"
+          echo "TAG=$tag" >>"$GITHUB_ENV"
+          gh release download "$tag" \
+            --repo michaeldlfx/suiseki \
+            --pattern checksums.txt \
+            --output checksums.txt
+
+      - name: generate formula
+        run: |
+          chmod +x scripts/generate-formula.sh
+          scripts/generate-formula.sh "$TAG" checksums.txt >suiseki.rb
+          rm -f checksums.txt
+
+      - name: commit if changed
+        run: |
+          if git diff --quiet -- suiseki.rb; then
+            echo "Formula already up to date for $TAG."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add suiseki.rb
+          git commit -m "suiseki $TAG"
+          git push
