@@ -66,10 +66,14 @@ class Suiseki < Formula
 
   def install
     bin.install Dir["suiseki-*"].first => "suiseki"
+    # \`sat\` is the same binary under a second name: invoked as \`sat\` it runs as
+    # \`suiseki view\` (a cat/bat/tree alternative). Relative symlink within bin.
+    bin.install_symlink "suiseki" => "sat"
   end
 
   test do
     assert_match "suiseki #{version}", shell_output("#{bin}/suiseki --version")
+    assert_match "suiseki #{version}", shell_output("#{bin}/sat --version")
   end
 end
 EOF
