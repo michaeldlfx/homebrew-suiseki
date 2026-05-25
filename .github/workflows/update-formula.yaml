@@ -5,9 +5,6 @@ name: update-formula
 # on demand right after a release:
 #   gh workflow run update-formula --repo michaeldlfx/homebrew-suiseki
 #
-# No cross-repo token needed: reading suiseki's public releases works with this
-# repo's GITHUB_TOKEN, and the commit is pushed to this same repo.
-#
 # Note: GitHub disables scheduled workflows after ~60 days of repo inactivity
 # (bot commits do not reset that timer). If the weekly run stops, re-enable it
 # from the Actions tab or trigger it manually.
@@ -26,6 +23,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
 
       - name: fetch latest suiseki release
         env:
