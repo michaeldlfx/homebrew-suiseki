@@ -46,7 +46,10 @@ jobs:
 
       - name: commit if changed
         run: |
-          if git diff --quiet -- suiseki.rb; then
+          # `git status --porcelain` reports untracked files, so this also catches
+          # the first-ever suiseki.rb. A plain `git diff` ignores untracked files,
+          # so the formula would otherwise never get committed on the first run.
+          if [ -z "$(git status --porcelain -- suiseki.rb)" ]; then
             echo "Formula already up to date for $TAG."
             exit 0
           fi
