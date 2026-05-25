@@ -1,28 +1,28 @@
 class Suiseki < Formula
   desc "Terminal renderer for diffs and code"
   homepage "https://github.com/michaeldlfx/suiseki"
-  version "1.0.1"
+  version "1.0.2"
   license "Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/michaeldlfx/suiseki/releases/download/v1.0.1/suiseki-darwin-arm64"
-      sha256 "99f68893827515ef9709f787f90aee6a992741bd8ca51390213279695c650610"
+      url "https://github.com/michaeldlfx/suiseki/releases/download/v1.0.2/suiseki-darwin-arm64"
+      sha256 "0a985f794a20077e2db9c7fd621b645e161e6ec793ae5ec3eb628cea688640c4"
     end
     on_intel do
-      url "https://github.com/michaeldlfx/suiseki/releases/download/v1.0.1/suiseki-darwin-x64"
-      sha256 "55deca8eaf7499adff7407a5d87262fc3d7b3df73f23f7c027f33822e27b67ab"
+      url "https://github.com/michaeldlfx/suiseki/releases/download/v1.0.2/suiseki-darwin-x64"
+      sha256 "12ef478f75126d53eccfab467e85454a0db1c6f78ab8f86a68c903844c1c1701"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/michaeldlfx/suiseki/releases/download/v1.0.1/suiseki-linux-arm64"
-      sha256 "eb25af204d6469c4cae79a2e1dacd222c57cb39727957e1f483d207902f364a5"
+      url "https://github.com/michaeldlfx/suiseki/releases/download/v1.0.2/suiseki-linux-arm64"
+      sha256 "3b148bfc77c50543015573af52c389be19f72200e91a6537b1ad8932cc1fdbbf"
     end
     on_intel do
-      url "https://github.com/michaeldlfx/suiseki/releases/download/v1.0.1/suiseki-linux-x64"
-      sha256 "5fbb07f35859dd6dfe54768295f2eea8baf8a20c8f3879df74e2cf066180ad6b"
+      url "https://github.com/michaeldlfx/suiseki/releases/download/v1.0.2/suiseki-linux-x64"
+      sha256 "b58d1fba7e6191d5352769157886c3087520ad3b5a581a699d3f79741c5e40fe"
     end
   end
 
