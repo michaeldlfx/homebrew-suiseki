@@ -33,6 +33,13 @@ class Suiseki < Formula
     bin.install_symlink "suiseki" => "sat"
   end
 
+  def caveats
+    <<~EOS
+      Initialize your config file (recommended) if you haven't already:
+        suiseki config --init
+    EOS
+  end
+
   test do
     assert_match "suiseki #{version}", shell_output("#{bin}/suiseki --version")
     assert_match "suiseki #{version}", shell_output("#{bin}/sat --version")
